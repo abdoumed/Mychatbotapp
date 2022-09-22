@@ -9,20 +9,21 @@ app.set("port", (process.env.PORT || 8000));
 app.use(bodyparser.urlencoded({ extended: false }));
 
 app.use(bodyparser.json());
-app.get("/messaging-webhook", (req, res) => {
-    const PAGE_VERIFY_TOKEN = "010203Starmychatbotapp";
+app.get("/webhook", function (req, res) {
+    const PAGE_VERIFY_TOKEN = "mychatbotapp12345";
   let token = req.query["hub.verify_token"];
   let challenge = req.query["hub.challenge"];
-  if (token === PAGE_VERIFY_TOKEN) {
+
+  if (token === PAGE_VERIFY_TOKEN){
   if (mode === "subscribe" && token === config.verifyToken) {
-    console.log("WEBHOOK_VERIFIED");
     res.status(200).send(challenge);
-} else {
+}
+ else {
     res.sendStatus(403);
 }
-}
+
 });
- 
+
 app.get("/", function (req, res) {
     res.send("hey !! I'm just a chatbot app.");
 });
